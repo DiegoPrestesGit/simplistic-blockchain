@@ -44,7 +44,7 @@ class Blockchain():
       pass
     
     while True:
-      if block.hashFunction()[:4] == "0" * self.difficulty:
+      if block.hashFunction()[:self.difficulty] == "0" * self.difficulty:
         self.addBlock(block); break
       else:
         block.nonce += 1
