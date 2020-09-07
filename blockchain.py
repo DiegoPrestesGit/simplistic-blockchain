@@ -10,6 +10,19 @@ class Block():
     self.data = data
     self.number = number
 
+  def hashFunction(self):
+    return updatedHash(
+      self.previous_hash, 
+      self.number, 
+      self.data, 
+      self.nonce
+    )
+  
+  def __str__(self):
+    return str('Block#: %s\nHash: %s\nPrevious: %s\nData: %s\nNonce: %s\n' 
+      %(self.number, self.hashFunction(), self.previous_hash, self.data, self.nonce))
+
+
 def updatedHash(*args):
   hashing_txt = ''; h = sha256()
   for arg in args:
@@ -18,19 +31,11 @@ def updatedHash(*args):
   h.update(hashing_txt.encode('utf-8'))
   return h.hexdigest()
 
-print(updatedHash('deregue'))
-
-def hashFunction(self):
-  return updatedHash(
-    self.previous_hash, 
-    self.number, 
-    self.data, 
-    self.nonce
-  )
-
+print(updatedHash('deregue', 'i do hash things'))
 
 def main():
   block = Block('Hey you', 1)
+  print(block)
 
 if __name__ == '__main__':
   main()
