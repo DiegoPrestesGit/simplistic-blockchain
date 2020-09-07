@@ -22,6 +22,32 @@ class Block():
     return str('Block#: %s\nHash: %s\nPrevious: %s\nData: %s\nNonce: %s\n' 
       %(self.number, self.hashFunction(), self.previous_hash, self.data, self.nonce))
 
+class Blockchain():
+  difficulty = 4
+
+  def __init__(self, chain=[]):
+    self.chain = chain
+
+  def addBlock(self, block):
+    self.chain.append({
+      'hash': block.hashFunction(), 
+      'previous': block.previous_hash, 
+      'number': block.number, 
+      'data': block.data, 
+      'nonce': block.nonce
+    })
+
+  def mining(self, block):
+    try:
+      block.previous_hash = self.chain[-1].get('hash')
+    except IndexError:
+      pass
+    
+    while True:
+      if block.hashFunction()[:4] == "0" * self.difficulty:
+        self.addBlock(block); break
+      else:
+        block.nonce += 1
 
 def updatedHash(*args):
   hashing_txt = ''; h = sha256()
@@ -34,11 +60,18 @@ def updatedHash(*args):
 print(updatedHash('deregue', 'i do hash things'))
 
 def main():
-  block = Block('Hey you', 1)
-  print(block)
+  blockchain = Blockchain()
+  fonDatabase = ['de', 'gu', 're', 'degurengo']
+
+  num = 0
+  for fon in fonDatabase:
+    num += 1
+    blockchain.mining(Block(fon, num))
+
+  print(blockchain.chain)
+
+  for block in blockchain.chain:
+    print(block)
 
 if __name__ == '__main__':
   main()
-
-class Blockchain():
-  pass
