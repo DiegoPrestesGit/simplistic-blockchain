@@ -10,11 +10,30 @@ class Block():
     self.data = data
     self.number = number
 
-class Blockchain():
-  pass
+def updatedHash(*args):
+  hashing_txt = ''; h = sha256()
+  for arg in args:
+    hashing_txt += str(arg)
+
+  h.update(hashing_txt.encode('utf-8'))
+  return h.hexdigest()
+
+print(updatedHash('deregue'))
+
+def hashFunction(self):
+  return updatedHash(
+    self.previous_hash, 
+    self.number, 
+    self.data, 
+    self.nonce
+  )
+
 
 def main():
   block = Block('Hey you', 1)
 
 if __name__ == '__main__':
   main()
+
+class Blockchain():
+  pass
